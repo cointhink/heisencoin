@@ -1,7 +1,12 @@
 require 'active_record'
-require 'models/strategy'
 require 'em-zeromq'
 require 'edn'
+require 'friendly_id'
+require 'acts_as_tree'
+
+# Load models
+Dir['lib/models/*.rb'].map{|f| File.basename(f,".rb")}
+                      .each{|rb| require "models/#{rb}"}
 
 APP_ROOT = File.dirname(__FILE__)+"/../"
 
