@@ -8,4 +8,4 @@ settings = YAML.parse(fs.readFileSync(settings_filename, 'utf8'))[0]
 console.log("Connecting to "+settings.zeromq.listen)
 sock = zmq.socket('req')
 sock.connect(settings.zeromq.listen)
-sock.send('{"method" "go"}')
+sock.send('{"method" "arbitrage"}')

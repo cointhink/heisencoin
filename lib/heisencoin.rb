@@ -5,6 +5,8 @@ require 'edn'
 
 APP_ROOT = File.dirname(__FILE__)+"/../"
 
+API_METHODS = %w(arbitrage)
+
 module Heisencoin
   def self.setup
     # Load database.yml
@@ -41,5 +43,14 @@ module Heisencoin
 
   def self.dispatch(rpc)
     puts "dispatch: #{rpc}"
+    method = rpc['method']
+    if API_METHODS.include?(method)
+      case method
+      when "arbitrage"
+        Strategy.opportunity('btc','usd',Snapshot.last)
+      end
+    else
+      puts "bad"
+    end
   end
 end
