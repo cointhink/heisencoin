@@ -14,19 +14,26 @@ module Heisencoin
 
     # Listen on ZeroMQ
     @zmq_ctx = EM::ZeroMQ::Context.new(1)
-    reactor
   end
 
   def self.reactor
     EM.run do
-      req = @zmq_ctx.socket(ZMQ::REP)
+      reply = @zmq_ctx.socket(ZMQ::REP)
       listening = @settings["zeromq"]["listen"]
       puts "zeromq listening on #{listening}"
-      req.bind(listening)
-      req.on(:message) do |part|
+      reply.bind(listening)
+      reply.on(:message) do |part|
         puts part.copy_out_string
         part.close
       end
+    end
+  end
+
+  def self.req #test
+    EM.run do
+      req = @zmq_ctx.socket(ZMQ::REQ)
+      req.connect(@settings["zeromq"]["listen"])
+      req.send_msg("anyone home")
     end
   end
 end
