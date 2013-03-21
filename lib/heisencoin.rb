@@ -1,6 +1,7 @@
 require 'active_record'
 require 'models/strategy'
 require 'em-zeromq'
+require 'edn'
 
 APP_ROOT = File.dirname(__FILE__)+"/../"
 
@@ -23,8 +24,9 @@ module Heisencoin
       puts "zeromq listening on #{listening}"
       reply.bind(listening)
       reply.on(:message) do |part|
-        puts part.copy_out_string
+        rpc = EDN.read(part.copy_out_string)
         part.close
+        dispatch(rpc)
       end
     end
   end
@@ -35,5 +37,9 @@ module Heisencoin
       req.connect(@settings["zeromq"]["listen"])
       req.send_msg("anyone home")
     end
+  end
+
+  def self.dispatch(rpc)
+    puts "dispatch: #{rpc}"
   end
 end
