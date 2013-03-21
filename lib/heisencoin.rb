@@ -14,7 +14,7 @@ module Heisencoin
 
     # Listen on ZeroMQ
     context = ZMQ::Context.new(1)
-    inbound = context.socket(ZMQ::UPSTREAM)
+    inbound = context.socket(ZMQ::REP)
     listening = db_settings["zeromq"]["listen"]
     puts "zeromq listening on #{listening}"
     inbound.bind(listening)
