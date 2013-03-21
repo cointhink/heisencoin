@@ -1,4 +1,4 @@
-/config/database.yml
+/config/settings.yml
 /bin
 /gems
 /.bundle
