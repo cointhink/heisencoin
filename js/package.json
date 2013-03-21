@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "zmq":"latest",
-    "apifeedr":"git://github.com/cointhink/apifeedr.git"
+    "apifeedr":"git://github.com/cointhink/apifeedr.git",
+    "coffee-script":"latest",
+    "libyaml":"latest"
   }
 }
