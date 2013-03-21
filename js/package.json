@@ -1,0 +1,9 @@
+{
+  "name": "heisencoin-worker",
+  "version":"0.0.1",
+  "private": true,
+  "dependencies": {
+    "zmq":"latest",
+    "apifeedr":"git://github.com/cointhink/bouncy-job-queue.git"
+  }
+}

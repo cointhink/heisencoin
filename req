@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ruby -rbundler/setup -Ilib -rheisencoin -e 'Heisencoin.setup; Heisencoin.req'
