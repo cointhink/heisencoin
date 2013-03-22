@@ -10,8 +10,7 @@ console.log("Connecting to "+settings.zeromq.listen)
 zsock = zmq.socket('req')
 zsock.connect(settings.zeromq.listen)
 
-apiworker.work_jobs((job_info, finisher)->
-  console.log('dispatch called! '+job_info)
+apiworker.work((job_info, finisher)->
   zsock.send('{"method" "arbitrage"}')
   zsock.on('message', (result) ->
     console.log(String(result))
