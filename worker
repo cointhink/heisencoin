@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd js
+node_modules/.bin/coffee worker.coffee
