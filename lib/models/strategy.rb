@@ -22,14 +22,13 @@ class Strategy < ActiveRecord::Base
     bids = Offer.where(['depth_run_id in (?)', bid_markets]).order("price desc")
     asks = Offer.where(['depth_run_id in (?)', ask_markets]).order("price asc")
 
+    actions = []
     if bids.count > 0 && asks.count > 0
-      actions = clearing_offers(bids, asks)
-      strategy = Strategy.analyze(actions)
-      snapshot.update_attribute :strategy, strategy
-      puts "Linked strategy ##{strategy.id} to snapshot ##{snapshot.id} #{snapshot.created_at}"
+      actions += clearing_offers(bids, asks)
     else
       puts "#{bids.count} bids. #{asks.count} asks. Nothing actionable."
     end
+    actions
   end
 
   def self.analyze(actions)

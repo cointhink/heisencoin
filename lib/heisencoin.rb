@@ -52,10 +52,21 @@ module Heisencoin
     if API_METHODS.include?(method)
       case method
       when "arbitrage"
-        Strategy.opportunity('btc','usd',Snapshot.last)
+        rpc_arbitrage(rpc['params'])
       end
     else
       puts "bad"
     end
+  end
+
+  def self.rpc_arbitrage(params)
+    actions = Strategy.opportunity('btc','usd',Snapshot.last)
+    # Full accounting
+    #strategy = Strategy.analyze(actions)
+    #snapshot.update_attribute :strategy, strategy
+    #puts "Linked strategy ##{strategy.id} to snapshot ##{snapshot.id} #{snapshot.created_at}"
+
+    # Summary
+    puts actions.inspect
   end
 end
