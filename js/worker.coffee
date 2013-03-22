@@ -9,3 +9,7 @@ console.log("Connecting to "+settings.zeromq.listen)
 sock = zmq.socket('req')
 sock.connect(settings.zeromq.listen)
 sock.send('{"method" "arbitrage"}')
+
+sock.on('message', (result) ->
+  console.log(String(result))
+)

@@ -33,7 +33,8 @@ module Heisencoin
       reply.on(:message) do |part|
         rpc = EDN.read(part.copy_out_string)
         part.close
-        dispatch(rpc)
+        result = dispatch(rpc)
+        reply.send_msg(result.to_edn)
       end
     end
   end
@@ -60,13 +61,23 @@ module Heisencoin
   end
 
   def self.rpc_arbitrage(params)
-    actions = Strategy.opportunity('btc','usd',Snapshot.last)
+    snapshot = Snapshot.last
+    actions = Strategy.opportunity('btc','usd', snapshot)
+
     # Full accounting
     #strategy = Strategy.analyze(actions)
     #snapshot.update_attribute :strategy, strategy
     #puts "Linked strategy ##{strategy.id} to snapshot ##{snapshot.id} #{snapshot.created_at}"
 
     # Summary
-    puts actions.inspect
+    buysells = Strategy.buysells(actions)
+    usd_in = actions.sum{|a| a[:sells].sum{|s| a[:buy].cost(s[:spent])}}
+    usd_out = actions.sum{|a| a[:sells].sum{|s| s[:offer].cost(s[:spent])}}
+
+    { cache: Time.now,
+      snapshot: {id: snapshot.id, date: snapshot.created_at},
+      balance_in: usd_in.to_h,
+      balance_out: usd_out.to_h
+    }
   end
 end

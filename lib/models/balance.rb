@@ -66,6 +66,10 @@ class Balance < ActiveRecord::Base
     "#{format%amount}#{currency}"
   end
 
+  def to_h
+    { amount: amount.to_f, currency: currency}
+  end
+
   def usd?
     currency == 'usd'
   end

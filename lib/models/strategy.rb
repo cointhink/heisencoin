@@ -237,6 +237,9 @@ class Strategy < ActiveRecord::Base
     puts strategy.trades.inspect
   end
 
+  def self.buysells(actions)
+  end
+
   def balance_in_calc
     stages.order('sequence').first.balance_in
   end
