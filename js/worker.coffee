@@ -7,7 +7,7 @@ edn = require('jsedn')
 settings_filename = "../config/settings.yml"
 settings = YAML.parse(fs.readFileSync(settings_filename, 'utf8'))[0]
 
-console.log("Connecting to "+settings.zeromq.listen)
+console.log("connecting to zmq job queue at "+settings.zeromq.listen)
 zsock = zmq.socket('req')
 zsock.connect(settings.zeromq.listen)
 
