@@ -6,6 +6,7 @@
     "zmq":"latest",
     "apifeedr":"git://github.com/cointhink/apifeedr.git",
     "coffee-script":"latest",
-    "libyaml":"latest"
+    "libyaml":"latest",
+    "daemon":"latest"
   }
 }
