@@ -12,8 +12,7 @@ zsock = zmq.socket('req')
 zsock.connect(settings.zeromq.listen)
 
 apiworker.work((job_info, finisher)->
-  console.log('working job')
-  console.log(job_info)
+  console.log('zmq dispatch job '+job_info.at('id'))
   zsock.send(edn.encode(job_info))
   zsock.on('message', (result) ->
     finisher.emit('job_result', String(result))
