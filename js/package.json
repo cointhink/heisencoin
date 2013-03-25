@@ -8,6 +8,7 @@
     "coffee-script":"latest",
     "libyaml":"latest",
     "jsedn":"latest",
-    "daemon":"latest"
+    "daemon":"latest",
+    "argparser":"latest"
   }
 }
