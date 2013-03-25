@@ -13,7 +13,6 @@ zsock.connect(settings.zeromq.listen)
 apiworker.work((job_info, finisher)->
   zsock.send('{"method" "arbitrage"}')
   zsock.on('message', (result) ->
-    console.log(String(result))
-    finisher.emit('job_result', result)
+    finisher.emit('job_result', String(result))
   )
 )
