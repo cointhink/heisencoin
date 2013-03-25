@@ -56,7 +56,8 @@ module Heisencoin
         rpc_arbitrage(rpc['params'])
       end
     else
-      puts "bad"
+      puts "unknown method #{method}"
+      {error: "Unknown method #{method}"}
     end
   end
 

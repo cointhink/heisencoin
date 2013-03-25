@@ -7,6 +7,7 @@
     "apifeedr":"git://github.com/cointhink/apifeedr.git",
     "coffee-script":"latest",
     "libyaml":"latest",
+    "jsedn":"latest",
     "daemon":"latest"
   }
 }

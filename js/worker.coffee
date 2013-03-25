@@ -2,6 +2,7 @@ zmq = require('zmq')
 YAML = require('libyaml')
 fs = require('fs')
 apiworker = require('apifeedr').worker
+edn = require('jsedn')
 
 settings_filename = "../config/settings.yml"
 settings = YAML.parse(fs.readFileSync(settings_filename, 'utf8'))[0]
@@ -11,7 +12,9 @@ zsock = zmq.socket('req')
 zsock.connect(settings.zeromq.listen)
 
 apiworker.work((job_info, finisher)->
-  zsock.send('{"method" "arbitrage"}')
+  console.log('working job')
+  console.log(job_info)
+  zsock.send(edn.encode(job_info))
   zsock.on('message', (result) ->
     finisher.emit('job_result', String(result))
   )
