@@ -62,10 +62,16 @@ module Heisencoin
   end
 
   def self.rpc_arbitrage(params)
-    snapshot = Snapshot.last
-    exchanges = params['exchanges'].map{|name| Exchange.find(name)}
+    # defaults
+    opts = {
+      exchange_names: params['exchanges'] || Exchange.actives.map{|e| e.slug},
+      currency: params['currency'] || 'usd'
+      }
 
-    actions, markets = Strategy.opportunity('btc', params['currency'], exchanges, snapshot)
+    snapshot = Snapshot.last
+    exchanges = opts[:exchange_names].map{|name| Exchange.find(name)}
+
+    actions, markets = Strategy.opportunity('btc', opts[:currency], exchanges, snapshot)
 
     # Full accounting
     #strategy = Strategy.analyze(actions)
@@ -78,9 +84,9 @@ module Heisencoin
 
     { cache: Time.now,
       snapshot: {id: snapshot.id, date: snapshot.created_at},
-      markets: markets,
+      exchanges: markets,
       balance_in: usd_in.to_h,
-      balance_out: usd_out.to_h
+      balance_out: usd_out.to_h,
     }
   end
 end
