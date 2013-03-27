@@ -15,10 +15,8 @@ zsock = zmq.socket('req')
 zsock.connect(settings.zeromq.listen)
 
 if(ap.opt('daemon'))
-  console.log('pre warp')
   require('daemon')({stdout: process.stdout, stderr: process.stderr})
 
-console.log('post warp')
 apiworker.work(function(job_info, finisher){
   console.log('zmq dispatch job '+job_info.at('id'))
   zsock.send(edn.encode(job_info))
