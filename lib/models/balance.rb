@@ -61,13 +61,16 @@ class Balance < ActiveRecord::Base
   end
 
   def to_s
-    decimal = currency == 'usd' ? 2 : 5
-    format = "%0.#{decimal}f"
+    format = "%0.#{decimal_places}f"
     "#{format%amount}#{currency}"
   end
 
+  def decimal_places
+    currency == 'btc' ? 5 : 2
+  end
+
   def to_h
-    { amount: amount.to_f, currency: currency}
+    { amount: amount.to_f.round(decimal_places), currency: currency}
   end
 
   def usd?
