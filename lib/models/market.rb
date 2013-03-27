@@ -30,6 +30,10 @@ class Market < ActiveRecord::Base
     "#{exchange.name} #{from_exchange_name}#{from_currency}/#{to_exchange_name}#{to_currency}"
   end
 
+  def to_s
+    "#{from_currency}/#{to_currency}"
+  end
+  
   def fee
     fee_percentage/100
   end

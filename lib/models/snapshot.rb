@@ -11,6 +11,10 @@ class Snapshot < ActiveRecord::Base
   def exchanges
     exchange_runs.map(&:exchange)
   end
+  
+  def exchange_runs_for(exchanges)
+    exchange_runs.where(exchange_id: exchanges.map(&:id)).all
+  end
 
   def poll(http, exchanges)
     edata = []

@@ -63,7 +63,9 @@ module Heisencoin
 
   def self.rpc_arbitrage(params)
     snapshot = Snapshot.last
-    actions = Strategy.opportunity('btc','usd', snapshot)
+    exchanges = params['exchanges'].map{|name| Exchange.find(name)}
+
+    actions, markets = Strategy.opportunity('btc', params['currency'], exchanges, snapshot)
 
     # Full accounting
     #strategy = Strategy.analyze(actions)
@@ -71,12 +73,12 @@ module Heisencoin
     #puts "Linked strategy ##{strategy.id} to snapshot ##{snapshot.id} #{snapshot.created_at}"
 
     # Summary
-    buysells = Strategy.buysells(actions)
-    usd_in = actions.sum{|a| a[:sells].sum{|s| a[:buy].cost(s[:spent])}}
-    usd_out = actions.sum{|a| a[:sells].sum{|s| s[:offer].cost(s[:spent])}}
+    usd_in = Balance.make_usd(0)+actions.sum{|a| a[:sells].sum{|s| a[:buy].cost(s[:spent])}}
+    usd_out = Balance.make_usd(0)+actions.sum{|a| a[:sells].sum{|s| s[:offer].cost(s[:spent])}}
 
     { cache: Time.now,
       snapshot: {id: snapshot.id, date: snapshot.created_at},
+      markets: markets,
       balance_in: usd_in.to_h,
       balance_out: usd_out.to_h
     }

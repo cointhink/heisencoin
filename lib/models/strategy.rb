@@ -7,14 +7,17 @@ class Strategy < ActiveRecord::Base
   has_many :exchange_balances, :dependent => :destroy
 
   # total opportunity
-  def self.opportunity(left_currency, right_currency, snapshot)
+  def self.opportunity(left_currency, right_currency, exchanges, snapshot)
     # find all asks less than bids, fee adjusted
     # assume unlimited buying funds
-    depth_runs = snapshot.exchange_runs.map{|er| er.depth_runs}.flatten
+    
+    exchange_runs = snapshot.exchange_runs_for(exchanges)
+    depth_runs = exchange_runs.map{|er| er.depth_runs}.flatten
     bid_markets = depth_runs.select{|dr| dr.market.from_currency == left_currency &&
                                          dr.market.to_currency == right_currency}
     ask_markets = depth_runs.select{|dr| dr.market.from_currency == right_currency &&
                                          dr.market.to_currency == left_currency}
+    market_names = ask_markets.inject({}) {|memo, m| memo[m.market.exchange.slug] = m.market.to_s; memo}
 
     puts "Ask Markets: #{ask_markets.map{|dr| "#{dr.market.name}"}.join(', ')}"
     puts "Bid Markets: #{bid_markets.map{|dr| "#{dr.market.name}"}.join(', ')}"
@@ -28,7 +31,7 @@ class Strategy < ActiveRecord::Base
     else
       puts "#{bids.count} bids. #{asks.count} asks. Nothing actionable."
     end
-    actions
+    [actions, market_names]
   end
 
   def self.analyze(actions)
@@ -235,9 +238,6 @@ class Strategy < ActiveRecord::Base
     strategy.trades << trade1
     strategy.trades << trade2
     puts strategy.trades.inspect
-  end
-
-  def self.buysells(actions)
   end
 
   def balance_in_calc
