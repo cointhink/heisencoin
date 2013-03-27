@@ -18,8 +18,9 @@ if(ap.opt('daemon'))
   require('daemon')({stdout: process.stdout, stderr: process.stderr})
 
 apiworker.work(function(job_info, finisher){
-  console.log('zmq dispatch job '+job_info.at('id'))
-  zsock.send(edn.encode(job_info))
+  var job_edn = edn.encode(job_info)
+  console.log(job_edn)
+  zsock.send(job_edn)
   zsock.on('message', function(result){
     finisher.emit('job_result', String(result))
   })
