@@ -4,6 +4,9 @@ Dir['lib/heisencoin/rpc/*.rb'].map{|f| File.basename(f,".rb")}
 
 module Heisencoin
   class RPC
+    API_METHODS = %w(arbitrage) #make dynamic
+    include Actions
+    
     def initialize(zmq_ctx, settings)
       @zmq_ctx = zmq_ctx
       @settings = settings
@@ -28,10 +31,7 @@ module Heisencoin
       puts "dispatch: #{rpc}"
       method = rpc['method']
       if API_METHODS.include?(method)
-        case method
-        when "arbitrage"
-          rpc_arbitrage(rpc['params'])
-        end
+        send('rpc_'+method, rpc['params'])
       else
         puts "unknown method #{method}"
         {error: "Unknown method #{method}"}

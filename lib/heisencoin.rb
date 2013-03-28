@@ -12,8 +12,6 @@ Dir['lib/models/*.rb'].map{|f| File.basename(f,".rb")}
 
 APP_ROOT = File.dirname(__FILE__)+"/../"
 
-API_METHODS = %w(arbitrage)
-
 module Heisencoin
   def self.begin
     # Load database.yml
