@@ -4,7 +4,7 @@ Dir['lib/heisencoin/rpc/*.rb'].map{|f| File.basename(f,".rb")}
 
 module Heisencoin
   class RPC
-    API_METHODS = %w(arbitrage) #make dynamic
+    API_METHODS = %w(arbitrage snapshot) #make dynamic
     include Actions
     
     def initialize(zmq_ctx, settings)
