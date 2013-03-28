@@ -35,8 +35,13 @@ apiworker.work(function(job_info, finisher){
 })
 
 function cache_lookup(job) {
+  console.log('cache_lookup')
+  console.log(job)
   return null
 }
 
 function cache_store(job, msg) {
+  console.log('cache_store')
+  console.log(job)
+  console.log(msg)
 }
