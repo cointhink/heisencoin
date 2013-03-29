@@ -18,6 +18,7 @@ GEM
     blankslate (2.1.2.4)
     builder (3.0.4)
     coderay (1.0.9)
+    descriptive_statistics (1.1.1)
     edn (1.0.0)
       parslet (~> 1.4.0)
     em-zeromq (0.4.1)
@@ -48,6 +49,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   acts_as_tree
+  descriptive_statistics
   edn
   em-zeromq
   friendly_id
