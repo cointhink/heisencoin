@@ -3,7 +3,7 @@ require 'em-zeromq'
 require 'edn'
 require 'friendly_id'
 require 'acts_as_tree'
-require 'descriptive_statistics'
+
 require 'heisencoin/rpc'
 
 # Load models
