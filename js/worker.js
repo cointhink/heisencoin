@@ -28,6 +28,7 @@ apiworker.work(function(job_info, finisher){
     zsock.send(job_edn)
     zsock.on('message', function(result){
       var msg = String(result)
+      console.log("ruby returned: "+msg)
       finisher.emit('job_result', msg)
       //cache_store(job_info, msg)
     })

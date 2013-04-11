@@ -6,12 +6,12 @@ module Heisencoin
   class RPC
     API_METHODS = %w(arbitrage snapshot) #make dynamic
     include Actions
-    
+
     def initialize(zmq_ctx, settings)
       @zmq_ctx = zmq_ctx
       @settings = settings
     end
-    
+
     def reactor
       EM.run do
         reply = @zmq_ctx.socket(ZMQ::REP)
@@ -22,11 +22,13 @@ module Heisencoin
           rpc = EDN.read(part.copy_out_string)
           part.close
           result = dispatch(rpc)
-          reply.send_msg(result.to_edn)
+          answer = result.to_edn
+          puts "relaying answer: #{answer}"
+          reply.send_msg(answer)
         end
       end
     end
-  
+
     def dispatch(rpc)
       puts "dispatch: #{rpc}"
       method = rpc['method']
