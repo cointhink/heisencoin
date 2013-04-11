@@ -18,7 +18,7 @@ if(ap.opt('daemon'))
   require('daemon')({stdout: process.stdout, stderr: process.stderr})
 
 apiworker.work(function(job_info, finisher){
-  var cache = cache_lookup(job_info)
+  var cache = false //cache_lookup(job_info)
   if(cache) {
     finisher.emit('job_result', cache)
   } else {
@@ -29,7 +29,7 @@ apiworker.work(function(job_info, finisher){
     zsock.on('message', function(result){
       var msg = String(result)
       finisher.emit('job_result', msg)
-      cache_store(job_info, msg)
+      //cache_store(job_info, msg)
     })
   }
 })
