@@ -13,7 +13,7 @@ class TestMeme < Minitest::Test
       end
 
       it "must accept new exchanges" do
-        exchanges = [{name:'place'}]
+        exchanges = [Heisencoin::Exchange.new({name:'btcx'})]
         @arby.add_exchanges(exchanges)
         @arby.exchanges.size.must_equal 1
       end

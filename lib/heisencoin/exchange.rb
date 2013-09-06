@@ -1,4 +1,4 @@
-module HeisenCoin
+module Heisencoin
   class Exchange
     attr_accessor :name, :depth
 
