@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "finance methods with a cryptocoin spin"
   s.authors     = ["Don Park"]
   s.email       = 'donp@donp.org'
-  s.files       = ["lib/heisencoin.rb"]
+  s.files       = Dir['lib/**']
   s.homepage    = 'https://github.com/cointhink/heisencoin'
   s.license     = 'Apache 2.0'
 end
