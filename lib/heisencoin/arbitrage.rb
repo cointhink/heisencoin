@@ -1,6 +1,10 @@
 module Heisencoin
   class Arbitrage
-    @exchanges = []
+    attr_accessor :exchanges
+
+    def initialize
+      @exchanges = []
+    end
 
     def add_exchanges(exchanges)
       @exchanges += exchanges
