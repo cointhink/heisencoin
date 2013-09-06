@@ -1,7 +1,9 @@
 module Heisencoin
   class Arbitrage
+    @exchanges = []
+
     def add_exchanges(exchanges)
-      puts "adding #{exchanges.size} exchanges"
+      @exchanges += exchanges
     end
 
     def plan
