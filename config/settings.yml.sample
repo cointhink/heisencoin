@@ -1,9 +1,0 @@
-development:
-  adapter: sqlite3
-  database: db/development.sqlite3
-  pool: 5
-  timeout: 5000
-
-zeromq:
-  listen: "tcp://127.0.0.1:9000"
-
