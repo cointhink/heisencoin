@@ -3,9 +3,9 @@ module Heisencoin
     attr_accessor :name, :depth, :time
 
     def initialize(attrs)
-      @name = attrs[:name]
-      @depth = attrs[:depth]
-      @time = Time.parse(attrs[:time])
+      @name = attrs['name']
+      @depth = attrs['depth']
+      @time = Time.parse(attrs['time'])
     end
   end
 end

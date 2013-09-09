@@ -1,12 +1,14 @@
 require "minitest/autorun"
+require "time"
 
 class TestMeme < Minitest::Test
 
   describe Heisencoin::Arbitrage do
     before do
       @arby = Heisencoin::Arbitrage.new
-      @ex1 = Heisencoin::Exchange.new({name:'btcx',
-          depth: {"asks" => [], "bids" => []}
+      @ex1 = Heisencoin::Exchange.new({'name' =>'btcx',
+          'time' => "1970-01-01",
+          'depth' => {"asks" => [], "bids" => []}
         })
     end
 
