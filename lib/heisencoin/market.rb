@@ -13,17 +13,19 @@ module Heisencoin
       end
     end
 
-    def sorted_insert(array, value)
-      if array.length == 0 || (yield value) <= (yield array[0])
-        array.unshift(value)
+    def sorted_insert(array, element)
+      value = yield element
+      if array.length == 0 || value <= (yield array[0])
+        array.unshift(element)
       else
-        for idx in 0..array.length-1
-          if (yield array[idx]) > (yield value)
-            array.insert(idx, value)
+        last_index = array.length-1
+        for idx in 0..last_index
+          if (yield array[idx]) > value
+            array.insert(idx, element)
             break
           end
-          if idx == array.length-1
-            array.push(value)
+          if idx == last_index
+            array.push(element)
           end
         end
       end
