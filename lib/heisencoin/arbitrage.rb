@@ -17,7 +17,7 @@ module Heisencoin
 
     def add_depth(exchange)
       @asks.import(exchange, exchange.depth["asks"])
-      @asks.import(exchange, exchange.depth["bids"])
+      @bids.import(exchange, exchange.depth["bids"])
     end
 
     def plan
