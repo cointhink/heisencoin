@@ -46,4 +46,36 @@ class TestMeme < Minitest::Test
 
   end
 
+  describe "when optimizing for arbitrage" do
+    before do
+      # full setup
+      @arby = Heisencoin::Arbitrage.new
+      @ex1 = Heisencoin::Exchange.new({'name' =>'btcx',
+          'time' => "1970-01-01",
+          'depth' => {"asks" => [], "bids" => []}
+        })
+      @ex2 = Heisencoin::Exchange.new({'name' =>'crytpsy',
+          'time' => "1970-01-01",
+          'depth' => {"asks" => [], "bids" => []}
+        })
+      @ex1.depth["asks"] += [ [10,1],
+                              [11,1.1],
+                              [9,0.9] ]
+      @ex1.depth["bids"] += [ [20,1],
+                              [21,1.1],
+                              [19,0.9] ]
+      @ex1.depth["asks"] += [ [10,1],
+                              [11,1.1],
+                              [9,0.9] ]
+      @ex1.depth["bids"] += [ [20,1],
+                              [21,1.1],
+                              [19,0.9] ]
+      @arby.add_exchanges([@ex1, @ex2])
+    end
+
+    it "should work" do
+      @arby.plan
+    end
+  end
+
 end
