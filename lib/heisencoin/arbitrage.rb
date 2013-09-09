@@ -20,14 +20,6 @@ module Heisencoin
       @bids.import(exchange, exchange.depth["bids"])
     end
 
-    def best_ask
-      @asks.offers.first
-    end
-
-    def best_bid
-      @bids.offers.first
-    end
-
     def plan
 
     end
