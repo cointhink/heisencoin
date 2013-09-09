@@ -25,7 +25,7 @@ module Heisencoin
       else
         last_index = array.length-1
         for idx in 0..last_index
-          if better_than((yield array[idx]), value)
+          if not better_than((yield array[idx]), value)
             array.insert(idx, element)
             break
           end

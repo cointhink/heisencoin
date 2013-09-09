@@ -25,14 +25,22 @@ class TestMeme < Minitest::Test
     end
 
     describe "when importing offers" do
-      it "must keep them sorted" do
+      it "must keep the asks sorted" do
         @ex1.depth["asks"] += [ [10,1],
                                 [11,1,1],
                                 [9,0.9] ]
         @arby.add_exchanges([@ex1])
         @arby.asks.offers.length.must_equal 3
         @arby.asks.offers.first[1].must_equal 9
+      end
 
+      it "must keep the bids sorted" do
+        @ex1.depth["bids"] += [ [20,1],
+                                [21,1,1],
+                                [19,0.9] ]
+        @arby.add_exchanges([@ex1])
+        @arby.bids.offers.length.must_equal 3
+        @arby.bids.offers.first[1].must_equal 21
       end
     end
 
