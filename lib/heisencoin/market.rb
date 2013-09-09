@@ -34,9 +34,9 @@ module Heisencoin
 
     def better_than(a,b)
       if @half == :ask
-        a > b
-      elsif @half == :bid
         a < b
+      elsif @half == :bid
+        a > b
       end
     end
 
