@@ -21,7 +21,7 @@ module Heisencoin
     end
 
     def plan
-      puts "formulating a plan"
+      puts "formulating a plan for #{@exchange.length} exchanges and #{@asks.offers.size} asks and #{@bids.offers.size} bids"
 
     end
   end
