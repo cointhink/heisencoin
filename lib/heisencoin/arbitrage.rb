@@ -4,8 +4,8 @@ module Heisencoin
 
     def initialize
       @exchanges = []
-      @asks = Market.new
-      @bids = Market.new
+      @asks = Market.new(:ask)
+      @bids = Market.new(:bid)
     end
 
     def add_exchanges(exchanges)
