@@ -28,7 +28,6 @@ class TestMeme < Minitest::Test
                                 [11,1,1],
                                 [9,0.9] ]
         @arby.add_exchanges([@ex1])
-        puts @arby.asks.offers.inspect
         @arby.asks.offers.length.must_equal 3
         @arby.asks.offers.first[1].must_equal 9
 
