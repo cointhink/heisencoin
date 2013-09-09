@@ -1,5 +1,6 @@
 require "minitest/autorun"
 require "time"
+require 'heisencoin'
 
 class TestMeme < Minitest::Test
 
@@ -58,22 +59,25 @@ class TestMeme < Minitest::Test
           'time' => "1970-01-01",
           'depth' => {"asks" => [], "bids" => []}
         })
-      @ex1.depth["asks"] += [ [10,1],
-                              [11,1.1],
-                              [9,0.9] ]
-      @ex1.depth["bids"] += [ [20,1],
-                              [21,1.1],
-                              [19,0.9] ]
-      @ex1.depth["asks"] += [ [10,1],
-                              [11,1.1],
-                              [9,0.9] ]
-      @ex1.depth["bids"] += [ [20,1],
-                              [21,1.1],
-                              [19,0.9] ]
+      # ex1 has a 14 bid above ex2
+      @ex1.depth["asks"] += [ [16,1],
+                              [17,1.1],
+                              [15,0.9] ]
+      @ex1.depth["bids"] += [ [13,1],
+                              [14,1.1],
+                              [12,0.9] ]
+      # ex2 has a 13.5 ask below ex2
+      @ex1.depth["asks"] += [ [14,1],
+                              [15,1.1],
+                              [13.5,0.9] ]
+      @ex1.depth["bids"] += [ [11,1],
+                              [12,1.1],
+                              [10,0.9] ]
       @arby.add_exchanges([@ex1, @ex2])
     end
 
     it "should work" do
+      # buy 13.5 x0.9 from ex2, sell to ex1 (up to x1.1)
       @arby.plan
     end
   end
