@@ -4,7 +4,11 @@ module Heisencoin
 
     def initialize(half)
       @offers = []
-      @half = half
+      if half == :bid || half == :ask
+        @half = half
+      else
+        raise "Bad market type parameter"
+      end
     end
 
     def import(exchange, offers)
