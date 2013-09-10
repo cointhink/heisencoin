@@ -76,9 +76,25 @@ class TestMeme < Minitest::Test
       @arby.add_exchanges([@ex1, @ex2])
     end
 
+    it "should find the lowest profitable bid" do
+      limit_bid_price = @arby.best_price(@arby.bids, @arby.asks){|offer, other| offer > other}
+      limit_bid_price.must_equal 14
+    end
+
+    it "should find the highest profitable ask" do
+      #@arby.high_ask.must_equal 13.5
+      limit_ask_price = @arby.best_price(@arby.asks, @arby.bids){|offer, other| offer < other}
+      limit_ask_price.must_equal 13.5
+    end
+
     it "should work" do
       # buy 13.5 x0.9 from ex2, sell to ex1 (up to x1.1)
-      @arby.plan
+      #plan = @arby.plan
+      #plan.steps.size.must_equal 1
+      #step1 = plan.steps.first
+      #step1.from.must_equal @ex2
+      #step1.to.must_equal @ex1
+      #step1.amount.must_equal 0.9
     end
   end
 
