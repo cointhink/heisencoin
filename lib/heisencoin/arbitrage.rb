@@ -29,6 +29,16 @@ module Heisencoin
       level
     end
 
+    def profitable_asks
+      limit_bid = best_price(@bids, @asks){|offer, other| offer > other}
+      @asks.offers.select{|offer| offer[1] < limit_bid}
+    end
+
+    def profitable_bids
+      limit_ask = best_price(@asks, @bids){|offer, other| offer < other}
+      @bids.offers.select{|offer| offer[1] > limit_ask}
+    end
+
     def plan
       #buy sell plan
 
