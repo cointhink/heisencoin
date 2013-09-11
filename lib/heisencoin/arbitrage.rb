@@ -69,7 +69,7 @@ module Heisencoin
 
     def plan
       #buy sell plan
-
+      trade_all(profitable_asks, profitable_bids)
     end
   end
 end
