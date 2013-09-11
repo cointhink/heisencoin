@@ -31,12 +31,20 @@ module Heisencoin
 
     def profitable_asks(highwater=nil)
       highwater ||= best_price(@bids, @asks){|offer, other| offer > other}
-      @asks.offers_better_than(highwater)
+      if highwater
+        @asks.offers_better_than(highwater)
+      else
+        []
+      end
     end
 
     def profitable_bids(lowwater=nil)
       lowwater ||= best_price(@asks, @bids){|offer, other| offer < other}
-      @bids.offers_better_than(lowwater)
+      if lowwater
+        @bids.offers_better_than(lowwater)
+      else
+        []
+      end
     end
 
     def trade_all(asks, bids)
