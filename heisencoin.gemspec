@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version     = '0.0.1'
   s.date        = '2013-08-31'
   s.summary     = "cryptocoin finance methods"
-  s.description = "finance methods with a cryptocoin spin"
+  s.description = "finance methods targeted for cryptocoin markets"
   s.authors     = ["Don Park"]
   s.email       = 'donp@donp.org'
   s.files       = Dir['lib/**']
