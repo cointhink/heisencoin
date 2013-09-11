@@ -1,3 +1,5 @@
+require 'time'
+
 module Heisencoin
   class Exchange
     attr_accessor :name, :depth, :time
