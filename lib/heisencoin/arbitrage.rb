@@ -57,10 +57,9 @@ module Heisencoin
       price = price_limit
       quantity = ask[2]
       bids.each do |bid|
-        puts "comparing #{bid} to price #{price} x#{quantity}"
         if bid[1] >= price
           if bid[2] >= quantity
-            trades << [bid[0], ask[0], price, quantity]
+            trades << [bid[0], ask[0], ask[1], quantity]
             bid[2] -= quantity
           end
         end

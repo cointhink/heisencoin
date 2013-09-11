@@ -64,12 +64,12 @@ class TestMeme < Minitest::Test
                               [17,1.1],
                               [15,0.9] ]
       @ex1.depth["bids"] += [ [13,1],
-                              [14,1.1],
+                              [14.1,1.1],[14.2,1.2],
                               [12,0.9] ]
       # ex2 has a 13.5 ask below ex2
       @ex2.depth["asks"] += [ [14,1],
                               [15,1.1],
-                              [13.5,0.9] ]
+                              [13.5,0.9],[13.4,0.5] ]
       @ex2.depth["bids"] += [ [11,1],
                               [12,1.1],
                               [10,0.9] ]
@@ -78,31 +78,27 @@ class TestMeme < Minitest::Test
 
     it "should find the lowest profitable bid price" do
       limit_bid_price = @arby.best_price(@arby.bids, @arby.asks){|offer, other| offer > other}
-      limit_bid_price.must_equal 14
+      limit_bid_price.must_equal 14.1
     end
 
     it "should find the highest profitable ask price" do
-      #@arby.high_ask.must_equal 13.5
       limit_ask_price = @arby.best_price(@arby.asks, @arby.bids){|offer, other| offer < other}
-      limit_ask_price.must_equal 13.5
+      limit_ask_price.must_equal 14
     end
 
     it "should find all profitable asks" do
       winners = @arby.profitable_asks
-      winners.size.must_equal 1
-      winners.first[1].must_equal 13.5
+      winners.must_equal [ [@ex2, 13.4, 0.5], [@ex2, 13.5, 0.9], [@ex2, 14, 1]]
     end
 
     it "should find all profitable bids" do
       winners = @arby.profitable_bids
-      winner = winners.first
-      winners.size.must_equal 1
-      winners.first[1].must_equal 14
+      winners.must_equal [ [@ex1, 14.2, 1.2], [@ex1, 14.1, 1.1]]
     end
 
     it "should make all available trades" do
       trades = @arby.trade_all(@arby.profitable_asks, @arby.profitable_bids)
-      trades.size.must_equal 1
+      trades.must_equal [ [@ex1, @ex2, 13.4, 0.5], [@ex1, @ex2, 13.4, 0.5]]
     end
 
     it "should work" do
