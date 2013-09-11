@@ -67,10 +67,10 @@ class TestMeme < Minitest::Test
                               [14,1.1],
                               [12,0.9] ]
       # ex2 has a 13.5 ask below ex2
-      @ex1.depth["asks"] += [ [14,1],
+      @ex2.depth["asks"] += [ [14,1],
                               [15,1.1],
                               [13.5,0.9] ]
-      @ex1.depth["bids"] += [ [11,1],
+      @ex2.depth["bids"] += [ [11,1],
                               [12,1.1],
                               [10,0.9] ]
       @arby.add_exchanges([@ex1, @ex2])
