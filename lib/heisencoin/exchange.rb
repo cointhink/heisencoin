@@ -7,5 +7,9 @@ module Heisencoin
       @depth = attrs['depth']
       @time = Time.parse(attrs['time'])
     end
+
+    def inspect
+      @name.inspect
+    end
   end
 end

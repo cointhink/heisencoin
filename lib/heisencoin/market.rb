@@ -44,5 +44,9 @@ module Heisencoin
       end
     end
 
+    def offers_better_than(price)
+      offers.select{|offer| better_than(offer[1], price)}
+    end
+
   end
 end

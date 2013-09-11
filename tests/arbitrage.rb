@@ -99,6 +99,21 @@ class TestMeme < Minitest::Test
       winners.size.must_equal 1
       winners.first[1].must_equal 14
     end
+
+    it "should make all available trades" do
+      trades = @arby.trade_all(@arby.profitable_asks, @arby.profitable_bids)
+      trades.size.must_equal 1
+    end
+
+    it "should work" do
+      # buy 13.5 x0.9 from ex2, sell to ex1 (up to x1.1)
+      #plan = @arby.plan
+      #plan.steps.size.must_equal 1
+      #step1 = plan.steps.first
+      #step1.from.must_equal @ex2
+      #step1.to.must_equal @ex1
+      #step1.amount.must_equal 0.9
+    end
   end
 
 end

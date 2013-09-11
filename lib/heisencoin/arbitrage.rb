@@ -29,14 +29,30 @@ module Heisencoin
       level
     end
 
-    def profitable_asks
-      limit_bid = best_price(@bids, @asks){|offer, other| offer > other}
-      @asks.offers.select{|offer| offer[1] < limit_bid}
+    def profitable_asks(highwater=nil)
+      highwater ||= best_price(@bids, @asks){|offer, other| offer > other}
+      @asks.offers_better_than(highwater)
     end
 
-    def profitable_bids
-      limit_ask = best_price(@asks, @bids){|offer, other| offer < other}
-      @bids.offers.select{|offer| offer[1] > limit_ask}
+    def profitable_bids(lowwater=nil)
+      lowwater ||= best_price(@asks, @bids){|offer, other| offer < other}
+      @bids.offers_better_than(lowwater)
+    end
+
+    def trade_all(asks, bids)
+      working_bids = bids.dup
+      trades = []
+      asks.each do |ask|
+        trade = consume_ask(working_bids, ask)
+        trades << trade
+        break if trade[2] < ask[2] #out of coins
+      end
+      trades
+    end
+
+    def consume_ask(bids, ask)
+      puts ask.inspect
+      [nil,0,0]
     end
 
     def plan
