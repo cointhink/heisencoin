@@ -17,7 +17,9 @@ module Heisencoin
     end
 
     def add_depth(exchange, depth)
+      @asks.drop_offers(exchange)
       @asks.import(exchange, depth["asks"])
+      @bids.drop_offers(exchange)
       @bids.import(exchange, depth["bids"])
     end
 

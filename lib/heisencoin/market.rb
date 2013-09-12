@@ -18,6 +18,10 @@ module Heisencoin
       end
     end
 
+    def drop_offers(exchange)
+      offers.reject!{|o| o.exchange = exchange}
+    end
+
     def sorted_insert(array, element)
       value = yield element
       if array.length == 0 || better_than(value, (yield array[0]))
