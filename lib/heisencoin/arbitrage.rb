@@ -67,7 +67,7 @@ module Heisencoin
       bids.each do |bid|
         if bid[1] >= price
           if bid[2] >= quantity
-            trades << [bid[0], ask[0], ask[1], quantity]
+            trades << [bid[0], bid[1], ask[0], ask[1], quantity]
             bid[2] -= quantity
           end
         end
