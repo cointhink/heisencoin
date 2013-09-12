@@ -10,14 +10,15 @@ module Heisencoin
 
     def add_exchanges(exchanges)
       @exchanges += exchanges
-      exchanges.each do |exchange|
-        add_depth(exchange)
-      end
     end
 
-    def add_depth(exchange)
-      @asks.import(exchange, exchange.depth["asks"])
-      @bids.import(exchange, exchange.depth["bids"])
+    def exchange(name)
+      exchanges.select{|e| e.name == name}.first
+    end
+
+    def add_depth(exchange, depth)
+      @asks.import(exchange, depth["asks"])
+      @bids.import(exchange, depth["bids"])
     end
 
     def best_price(market1, market2)
