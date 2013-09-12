@@ -7,9 +7,5 @@ module Heisencoin
     def initialize(attrs)
       @name = attrs['name']
     end
-
-    def inspect
-      @name.inspect
-    end
   end
 end
