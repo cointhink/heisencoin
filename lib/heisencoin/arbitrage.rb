@@ -26,8 +26,8 @@ module Heisencoin
     def best_price(market1, market2)
       level = nil
       market1.offers.each do |offer|
-        good = market2.offers.any?{|offer_other| yield offer[1], offer_other[1]}
-        level = offer[1] if good
+        good = market2.offers.any?{|offer_other| yield offer.price, offer_other.price}
+        level = offer.price if good
       end
       level
     end
