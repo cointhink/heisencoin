@@ -13,8 +13,8 @@ module Heisencoin
 
     def import(exchange, offers)
       offers.each do |raw_offer|
-        offer = [exchange, raw_offer.first, raw_offer.last]
-        sorted_insert(@offers, offer) {|element| element[1]}
+        offer = Offer.from_array(exchange, [raw_offer.first, raw_offer.last])
+        sorted_insert(@offers, offer) {|offer| offer.price}
       end
     end
 
