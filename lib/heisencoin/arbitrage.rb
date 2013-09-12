@@ -55,10 +55,10 @@ module Heisencoin
       trades = []
       fee = 0.001
       asks.each do |ask|
-        step_trades = consume_ask(working_bids, ask, ask[1]*(1-fee))
+        step_trades = consume_ask(working_bids, ask, ask.price*(1-fee))
         trades += step_trades
         qty_traded = step_trades.reduce(0){|memo, trade| memo += trade[3]}
-        break if qty_traded < ask[2] #out of coins
+        break if qty_traded < ask.quantity #out of coins
       end
       trades
     end
@@ -66,12 +66,11 @@ module Heisencoin
     def consume_ask(bids, ask, price_limit)
       trades = []
       price = price_limit
-      quantity = ask[2]
       bids.each do |bid|
         if bid[1] >= price
-          if bid[2] >= quantity
-            trades << [bid[0], bid[1], ask[0], ask[1], quantity]
-            bid[2] -= quantity
+          if bid.quantity >= ask.quantity
+            trades << [bid.exchange, bid.price, ask.exchange, ask.price, quantity]
+            bid.quantity -= ask.quantity
           end
         end
       end
