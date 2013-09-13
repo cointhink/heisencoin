@@ -89,5 +89,10 @@ module Heisencoin
       #buy sell plan
       trade_all(profitable_asks, profitable_bids)
     end
+
+    def spread
+      @asks.offers.first.price - @bids.offers.first.price
+    end
+
   end
 end
