@@ -10,5 +10,11 @@ module Heisencoin
       offer
     end
 
+    def ==(other)
+      exchange.name == other.exchange.name
+      price == other.price
+      quantity = other.quantity
+    end
+
   end
 end

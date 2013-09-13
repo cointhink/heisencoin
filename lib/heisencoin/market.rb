@@ -19,7 +19,7 @@ module Heisencoin
     end
 
     def drop_offers(exchange)
-      offers.reject!{|o| o.exchange = exchange}
+      offers.reject!{|o| o.exchange == exchange}
     end
 
     def sorted_insert(array, element)

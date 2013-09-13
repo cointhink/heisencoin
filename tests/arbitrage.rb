@@ -4,6 +4,8 @@ require 'heisencoin'
 
 class TestMeme < Minitest::Test
 
+  include Heisencoin
+
   describe Heisencoin::Arbitrage do
     before do
       @arby = Heisencoin::Arbitrage.new
@@ -71,29 +73,35 @@ class TestMeme < Minitest::Test
       @arby.add_depth(@ex2, depth)
     end
 
-    it "should find the lowest profitable bid price" do
+    it "should find the least profitable bid price" do
       limit_bid_price = @arby.best_price(@arby.bids, @arby.asks){|offer, other| offer > other}
-      limit_bid_price.must_equal 14.1
+      limit_bid_price.must_equal 14.2
     end
 
-    it "should find the highest profitable ask price" do
+    it "should find the least profitable ask price" do
       limit_ask_price = @arby.best_price(@arby.asks, @arby.bids){|offer, other| offer < other}
-      limit_ask_price.must_equal 14
+      limit_ask_price.must_equal 13.4
     end
 
     it "should find all profitable asks" do
       winners = @arby.profitable_asks
-      winners.must_equal [ [@ex2, 13.4, 0.5], [@ex2, 13.5, 0.9], [@ex2, 14, 1]]
+      winners.must_equal [ Offer.from_array(@ex2, [13.4, 0.5]),
+                           Offer.from_array(@ex2, [13.5, 0.9]),
+                           Offer.from_array(@ex2, [14, 1])]
     end
 
     it "should find all profitable bids" do
       winners = @arby.profitable_bids
-      winners.must_equal [ [@ex1, 14.2, 1.2], [@ex1, 14.1, 1.1]]
+      winners.must_equal [ Offer.from_array(@ex1, [14.2, 1.2]),
+                           Offer.from_array(@ex1, [14.1, 1.1])]
     end
 
     it "should make all available trades" do
       trades = @arby.trade_all(@arby.profitable_asks, @arby.profitable_bids)
-      trades.must_equal [ [@ex1, @ex2, 13.4, 0.5], [@ex1, @ex2, 13.4, 0.5]]
+      trades.must_equal [ [@ex1, 14.2, @ex2, 13.4, 0.5],
+                          [@ex1, 14.2, @ex2, 13.5, 0.7],
+                          [@ex1, 14.1, @ex2, 13.5, 0.20000000000000007],
+                          [@ex1, 14.1, @ex2, 14, 0.9]]
     end
 
     it "should work" do
