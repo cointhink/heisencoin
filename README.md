@@ -8,7 +8,7 @@ A toolbox of financial computations with a focus on cryptocoin markets.
 gem install heisencoin
 ```
 
-### Examples
+### Arbitrage
 
 Two exchanges, coinland and discountcoin are trading GalaxyCoins for NeoCoins.
 
