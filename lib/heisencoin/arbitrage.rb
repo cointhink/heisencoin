@@ -69,13 +69,18 @@ module Heisencoin
     def consume_ask(bids, ask, price_limit)
       trades = []
       price = price_limit
+      quantity = ask.quantity
+      near_zero = 0.0001 #floats
       bids.each do |bid|
         if bid.price >= price
-          if bid.quantity >= ask.quantity
-            trades << [bid.exchange, bid.price, ask.exchange, ask.price, quantity]
-            bid.quantity -= ask.quantity
+          if bid.quantity > near_zero
+            trade_quantity = [bid.quantity, quantity].min
+            trades << [bid.exchange, bid.price, ask.exchange, ask.price, trade_quantity]
+            bid.quantity -= trade_quantity
+            quantity -= trade_quantity
           end
         end
+        break if quantity < near_zero
       end
       trades
     end
