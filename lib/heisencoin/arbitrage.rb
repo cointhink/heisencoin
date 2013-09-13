@@ -27,7 +27,10 @@ module Heisencoin
       level = nil
       market1.offers.each do |offer|
         good = market2.offers.any?{|offer_other| yield offer.price, offer_other.price}
-        level = offer.price if good
+        if good
+          level = offer.price
+          break
+        end
       end
       level
     end

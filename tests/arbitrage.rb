@@ -7,10 +7,7 @@ class TestMeme < Minitest::Test
   describe Heisencoin::Arbitrage do
     before do
       @arby = Heisencoin::Arbitrage.new
-      @ex1 = Heisencoin::Exchange.new({'name' =>'btcx',
-          'time' => "1970-01-01",
-          'depth' => {"asks" => [], "bids" => []}
-        })
+      @ex1 = Heisencoin::Exchange.new({'name' =>'btcx'})
     end
 
     describe "when setting up the list of exchanges" do
@@ -26,22 +23,24 @@ class TestMeme < Minitest::Test
     end
 
     describe "when importing offers" do
+      before do
+        @depth = {"asks" => [ [10,1],
+                              [11,1,1],
+                              [9,0.9] ],
+                  "bids" => [ [20,1],
+                              [21,1,1],
+                              [19,0.9] ]}
+        @arby.add_depth(@ex1, @depth)
+      end
+
       it "must keep the asks sorted" do
-        @ex1.depth["asks"] += [ [10,1],
-                                [11,1,1],
-                                [9,0.9] ]
-        @arby.add_exchanges([@ex1])
-        @arby.asks.offers.length.must_equal 3
-        @arby.asks.offers.first[1].must_equal 9
+        @arby.asks.offers.length.must_equal @depth["asks"].size
+        @arby.asks.offers.first.price.must_equal 9
       end
 
       it "must keep the bids sorted" do
-        @ex1.depth["bids"] += [ [20,1],
-                                [21,1,1],
-                                [19,0.9] ]
-        @arby.add_exchanges([@ex1])
-        @arby.bids.offers.length.must_equal 3
-        @arby.bids.offers.first[1].must_equal 21
+        @arby.bids.offers.length.must_equal @depth["bids"].size
+        @arby.bids.offers.first.price.must_equal 21
       end
     end
 
@@ -51,29 +50,25 @@ class TestMeme < Minitest::Test
     before do
       # full setup
       @arby = Heisencoin::Arbitrage.new
-      @ex1 = Heisencoin::Exchange.new({'name' =>'btcx',
-          'time' => "1970-01-01",
-          'depth' => {"asks" => [], "bids" => []}
-        })
-      @ex2 = Heisencoin::Exchange.new({'name' =>'crytpsy',
-          'time' => "1970-01-01",
-          'depth' => {"asks" => [], "bids" => []}
-        })
-      # ex1 has a 14 bid above ex2
-      @ex1.depth["asks"] += [ [16,1],
-                              [17,1.1],
-                              [15,0.9] ]
-      @ex1.depth["bids"] += [ [13,1],
-                              [14.1,1.1],[14.2,1.2],
-                              [12,0.9] ]
-      # ex2 has a 13.5 ask below ex2
-      @ex2.depth["asks"] += [ [14,1],
-                              [15,1.1],
-                              [13.5,0.9],[13.4,0.5] ]
-      @ex2.depth["bids"] += [ [11,1],
-                              [12,1.1],
-                              [10,0.9] ]
+      @ex1 = Heisencoin::Exchange.new({'name' =>'btcx'})
+      @ex2 = Heisencoin::Exchange.new({'name' =>'crytpsy'})
       @arby.add_exchanges([@ex1, @ex2])
+      # ex1 has a 14.1 and 14.2 bid above ex2's 14 ask
+      depth = {"asks" => [ [16,1],
+                           [17,1.1],
+                           [15,0.9] ],
+               "bids" => [ [13,1],
+                           [14.1,1.1],[14.2,1.2],
+                           [12,0.9] ]}
+      @arby.add_depth(@ex1, depth)
+      # ex2 has a 13.5 ask below ex2
+      depth = {"asks" => [ [14,1],
+                           [15,1.1],
+                           [13.5,0.9],[13.4,0.5] ],
+               "bids" => [ [11,1],
+                           [12,1.1],
+                           [10,0.9] ]}
+      @arby.add_depth(@ex2, depth)
     end
 
     it "should find the lowest profitable bid price" do
