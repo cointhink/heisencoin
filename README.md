@@ -21,11 +21,11 @@ exchange1 = Exchange.new({'name' =>'coinland'})
 exchange2 = Exchange.new({'name' =>'discountcoin'})
 calc.add_exchanges([exchange1, exchange2])
 
-# HTTP call to coinland api
+# after HTTP call to coinland api
 depth = {'asks' => [[6.1,1.0]], 'bids' => [[5.8,1.0]]}
 calc.add_depth(exchange1, depth)
 
-# HTTP call to discouncoin api
+# after HTTP call to discouncoin api
 depth = {'asks' => [[5.5,1.0]], 'bids' => [[5.0,1.0]]}
 calc.add_depth(exchange2, depth)
 
