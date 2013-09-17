@@ -98,20 +98,16 @@ class TestMeme < Minitest::Test
 
     it "should make all available trades" do
       trades = @arby.trade_all(@arby.profitable_asks, @arby.profitable_bids)
-      trades.must_equal [ [@ex1, 14.2, @ex2, 13.4, 0.5],
-                          [@ex1, 14.2, @ex2, 13.5, 0.7],
-                          [@ex1, 14.1, @ex2, 13.5, 0.20000000000000007],
-                          [@ex1, 14.1, @ex2, 14, 0.9]]
+      trades.must_equal [ Trade.new(@ex2, @ex1, 0.5),
+                          Trade.new(@ex2, @ex1, 0.7),
+                          Trade.new(@ex2, @ex1, 0.20000000000000007),
+                          Trade.new(@ex2, @ex1, 0.9)]
     end
 
     it "should work" do
       # buy 13.5 x0.9 from ex2, sell to ex1 (up to x1.1)
-      #plan = @arby.plan
-      #plan.steps.size.must_equal 1
-      #step1 = plan.steps.first
-      #step1.from.must_equal @ex2
-      #step1.to.must_equal @ex1
-      #step1.amount.must_equal 0.9
+      plan = @arby.plan
+      plan.steps.size.must_equal 4
     end
   end
 
