@@ -15,7 +15,7 @@ module Heisencoin
       @steps.reduce(0){|sum,trade|sum+trade.quantity}
     end
 
-    def to_json
+    def to_json(state = nil)
       @steps.to_json
     end
 
