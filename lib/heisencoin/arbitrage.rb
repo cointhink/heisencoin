@@ -75,7 +75,9 @@ module Heisencoin
         if bid.price >= price
           if bid.quantity > near_zero
             trade_quantity = [bid.quantity, quantity].min
-            trades << Trade.new(ask, bid, trade_quantity)
+            trades << Trade.new({'from_offer' => ask.to_simple,
+                                 'to_offer' => bid.to_simple,
+                                 'quantity' => trade_quantity})
             bid.quantity -= trade_quantity
             quantity -= trade_quantity
           end

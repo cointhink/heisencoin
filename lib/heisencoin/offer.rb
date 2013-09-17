@@ -2,12 +2,20 @@ module Heisencoin
   class Offer
     attr_accessor :exchange, :price, :quantity
 
-    def self.from_array(exchange, raw_offer)
-      offer = Offer.new
-      offer.exchange = exchange
-      offer.price = raw_offer[0]
-      offer.quantity = raw_offer[1]
-      offer
+    def initialize(simple = nil)
+      from_simple(simple) if simple
+    end
+
+    def from_simple(simple)
+      @exchange = Exchange.new(simple['exchange'])
+      @price = simple['price']
+      @quantity = simple['quantity']
+    end
+
+    def to_simple
+      {'exchange' => exchange.to_simple,
+       'price' => price,
+       'quantity' => quantity}
     end
 
     def ==(other)
@@ -16,5 +24,10 @@ module Heisencoin
       quantity = other.quantity
     end
 
+    def self.from_array(exchange, raw_offer)
+      Offer.new({'exchange' => exchange.to_simple,
+                 'price' => raw_offer[0],
+                 'quantity' => raw_offer[1]})
+    end
   end
 end

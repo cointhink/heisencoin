@@ -2,10 +2,20 @@ module Heisencoin
   class Trade
     attr_accessor :from_offer, :to_offer, :quantity
 
-    def initialize(from, to, quantity)
-      @from_offer = from
-      @to_offer = to
-      @quantity = quantity
+    def initialize(simple = nil)
+      from_simple(simple) if simple
+    end
+
+    def from_simple(simple)
+      @from_offer = Offer.new(simple['from_offer'])
+      @to_offer = Offer.new(simple['to_offer'])
+      @quantity = simple['quantity']
+    end
+
+    def to_simple
+      {'from_offer' => @from_offer.to_simple,
+       'to_offer' => @to_offer.to_simple,
+       'quantity' => @quantity.to_simple}
     end
 
     def ==(other)
@@ -13,5 +23,6 @@ module Heisencoin
       @to_offer == other.to_offer
       @quantity == other.quantity
     end
+
   end
 end

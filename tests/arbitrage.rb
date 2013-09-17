@@ -98,10 +98,18 @@ class TestMeme < Minitest::Test
 
     it "should make all available trades" do
       trades = @arby.trade_all(@arby.profitable_asks, @arby.profitable_bids)
-      trades.must_equal [ Trade.new(@ex2, @ex1, 0.5),
-                          Trade.new(@ex2, @ex1, 0.7),
-                          Trade.new(@ex2, @ex1, 0.20000000000000007),
-                          Trade.new(@ex2, @ex1, 0.9)]
+      trades.must_equal [ Trade.new({'from_offer' => Offer.from_array(@ex2, [13.4, 0.5]).to_simple,
+                                     'to_offer' => Offer.from_array(@ex1, [14.2, 0.5]).to_simple,
+                                     'quantity' => 0.5}),
+                          Trade.new({'from_offer' => Offer.from_array(@ex2, [13.4, 0.5]).to_simple,
+                                     'to_offer' => Offer.from_array(@ex1, [14.2, 0.5]).to_simple,
+                                     'quantity' => 0.7}),
+                          Trade.new({'from_offer' => Offer.from_array(@ex2, [13.4, 0.5]).to_simple,
+                                     'to_offer' => Offer.from_array(@ex1, [14.2, 0.5]).to_simple,
+                                     'quantity' => 0.20000000000000007}),
+                          Trade.new({'from_offer' => Offer.from_array(@ex2, [13.4, 0.5]).to_simple,
+                                     'to_offer' => Offer.from_array(@ex1, [14.2, 0.5]).to_simple,
+                                     'quantity' => 0.9}) ]
     end
 
     it "should work" do
