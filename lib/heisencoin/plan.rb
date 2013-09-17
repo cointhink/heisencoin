@@ -10,5 +10,10 @@ module Heisencoin
       @steps += trades
       self
     end
+
+    def quantity
+      @steps.reduce(0){|sum,trade|sum+trade.quantity}
+    end
+
   end
 end
