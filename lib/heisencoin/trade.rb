@@ -15,7 +15,7 @@ module Heisencoin
     def to_simple
       {'from_offer' => @from_offer.to_simple,
        'to_offer' => @to_offer.to_simple,
-       'quantity' => @quantity.to_simple}
+       'quantity' => @quantity}
     end
 
     def ==(other)
