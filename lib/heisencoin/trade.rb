@@ -26,7 +26,7 @@ module Heisencoin
 
     def profit
       spent = from_offer.spent(@quantity)
-      earned = to_offer.spent(spent)
+      earned = to_offer.spent(@quantity)
       earned - spent
     end
 
