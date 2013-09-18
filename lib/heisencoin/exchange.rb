@@ -16,5 +16,9 @@ module Heisencoin
       {'name' => name}
     end
 
+    def ==(other)
+      self.name == other.name
+    end
+
   end
 end
