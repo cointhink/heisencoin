@@ -24,6 +24,10 @@ module Heisencoin
       quantity = other.quantity
     end
 
+    def spent(quantity)
+      price * quantity
+    end
+
     def self.from_array(exchange, raw_offer)
       Offer.new({'exchange' => exchange.to_simple,
                  'price' => raw_offer[0],
