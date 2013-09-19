@@ -33,7 +33,7 @@ class TestMeme < Minitest::Test
       end
 
       it "must calculate amount spent" do
-        @offer.spent(0.5).must_equal 5
+        @offer.cost(0.5).must_equal 5
       end
 
     end
