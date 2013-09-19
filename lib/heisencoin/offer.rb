@@ -24,8 +24,8 @@ module Heisencoin
       quantity = other.quantity
     end
 
-    def spent(quantity)
-      price * quantity
+    def cost(quantity)
+      quantity * price
     end
 
     def self.from_array(exchange, raw_offer)
