@@ -24,10 +24,13 @@ module Heisencoin
       @quantity == other.quantity
     end
 
+    def cost
+      from_offer.cost(@quantity)
+    end
+
     def profit
-      spent = from_offer.cost(@quantity)
       earned = to_offer.cost(@quantity)
-      earned - spent
+      earned - cost
     end
 
   end

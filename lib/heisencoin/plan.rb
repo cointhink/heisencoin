@@ -28,5 +28,8 @@ module Heisencoin
       @steps.reduce(0){|total, trade| total+trade.profit}
     end
 
+    def cost
+      @steps.reduce(0){|total, trade| total+trade.cost}
+    end
   end
 end
