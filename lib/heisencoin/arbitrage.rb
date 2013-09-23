@@ -71,7 +71,7 @@ module Heisencoin
       quantity = ask.quantity
       near_zero = 0.0001 #floats
       bids.each do |bid|
-        if bid.price >= price
+        if (bid.price*(1+bid.exchange.fee)) >= price
           if bid.quantity > near_zero
             trade_quantity = [bid.quantity, quantity].min
             trades << Trade.new({'from_offer' => ask.to_simple,
