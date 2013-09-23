@@ -52,8 +52,8 @@ class TestMeme < Minitest::Test
     before do
       # full setup
       @arby = Heisencoin::Arbitrage.new
-      @ex1 = Heisencoin::Exchange.new({'name' =>'btcx'})
-      @ex2 = Heisencoin::Exchange.new({'name' =>'crytpsy'})
+      @ex1 = Heisencoin::Exchange.new({'name' =>'btcx', 'fee' => 0.2})
+      @ex2 = Heisencoin::Exchange.new({'name' =>'crytpsy', 'fee' => 0.3})
       @arby.add_exchanges([@ex1, @ex2])
       # ex1 has a 14.1 and 14.2 bid above ex2's 14 ask
       depth = {"asks" => [ [16,1],
