@@ -2,7 +2,7 @@ require 'time'
 
 module Heisencoin
   class Exchange
-    attr_accessor :name, :time
+    attr_accessor :name, :fee, :time
 
     def initialize(simple = nil)
       from_simple(simple) if simple
@@ -10,10 +10,12 @@ module Heisencoin
 
     def from_simple(simple)
       @name = simple['name']
+      @fee = simple['fee']
     end
 
     def to_simple
-      {'name' => name}
+      {'name' => name,
+       'fee' => fee}
     end
 
     def ==(other)
