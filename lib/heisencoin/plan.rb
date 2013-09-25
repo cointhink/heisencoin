@@ -2,8 +2,11 @@ module Heisencoin
   class Plan
     attr_accessor :steps, :state
 
+    @@states = ["planning", "buying", "moving-in", "selling", "moving-out"]
+
     def initialize(simple = nil)
       @steps = []
+      @state = @@states.first
       from_simple(simple) if simple
     end
 
