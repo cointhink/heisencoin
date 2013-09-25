@@ -1,6 +1,6 @@
 module Heisencoin
   class Plan
-    attr_accessor :steps
+    attr_accessor :steps, :state
 
     def initialize(simple = nil)
       @steps = []
@@ -8,11 +8,13 @@ module Heisencoin
     end
 
     def from_simple(simple)
-      @steps = simple.map{|trade_simple| Trade.new(trade_simple)}
+      @state = simple["state"]
+      @steps = simple["steps"].map{|trade_simple| Trade.new(trade_simple)}
     end
 
     def to_simple
-      @steps.map{|step| step.to_simple}
+      {"steps" => @steps.map{|step| step.to_simple},
+       "state" => @state}
     end
 
     def <<(trades)
