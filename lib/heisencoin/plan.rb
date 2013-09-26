@@ -13,7 +13,7 @@ module Heisencoin
     def from_simple(simple)
       @state = simple["state"]
       @purse = simple["purse"]
-      @purse = simple["spent"]
+      @spent = simple["spent"]
       @steps = simple["steps"].map{|trade_simple| Trade.new(trade_simple)}
     end
 
