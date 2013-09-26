@@ -1,6 +1,6 @@
 module Heisencoin
   class Plan
-    attr_accessor :steps, :state
+    attr_accessor :steps, :state, :purse
 
     @@states = ["planning", "buying", "moving-in", "selling", "moving-out"]
 
@@ -12,12 +12,14 @@ module Heisencoin
 
     def from_simple(simple)
       @state = simple["state"]
+      @purse = simple["purse"]
       @steps = simple["steps"].map{|trade_simple| Trade.new(trade_simple)}
     end
 
     def to_simple
-      {"steps" => @steps.map{|step| step.to_simple},
-       "state" => @state}
+      {"state" => @state,
+       "purse" => @purse,
+       "steps" => @steps.map{|step| step.to_simple}}
     end
 
     def <<(trades)
