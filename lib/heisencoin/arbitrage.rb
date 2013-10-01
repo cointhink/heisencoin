@@ -57,7 +57,7 @@ module Heisencoin
       working_bids = bids.dup
       trades = []
       asks.each do |ask|
-        step_trades = consume_ask(working_bids, ask, ask.price*(1-ask.exchange.fee))
+        step_trades = consume_ask(working_bids, ask, ask.price*(1+ask.exchange.fee))
         trades += step_trades
         qty_traded = step_trades.reduce(0){|memo, trade| memo += trade.quantity} #sum
         break if qty_traded < ask.quantity #out of coins
@@ -71,7 +71,7 @@ module Heisencoin
       quantity = ask.quantity
       near_zero = 0.0001 #floats
       bids.each do |bid|
-        if (bid.price*(1+bid.exchange.fee)) >= price
+        if (bid.price*(1-bid.exchange.fee)) >= price
           if bid.quantity > near_zero
             trade_quantity = [bid.quantity, quantity].min
             trades << Trade.new({'from_offer' => ask.to_simple,
